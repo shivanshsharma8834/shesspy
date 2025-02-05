@@ -75,17 +75,18 @@ class Game:
 
                         # Check if it's the current player's move then move the current board while highlighting the available positions from the 
                         # current location
-                        holding_mouse = ((y, x), True)
+                        holding_mouse = ((y, x), True, self.chess_board.board[y][x])
+                        self.chess_board.board[y][x] = ''
                     
-                    if self.chess_board.board[y][x] == '':
-                            print('Current pos: ', self.chess_board.board[holding_mouse[0][0]][holding_mouse[0][1]])
-                            self.chess_board.board[y][x] = self.chess_board.board[holding_mouse[0][0]][holding_mouse[0][1]]
-                            self.chess_board.board[holding_mouse[0][0]][holding_mouse[0][1]] = ''
-                            holding_mouse = (None, False)
+                    elif self.chess_board.board[y][x] == '' and holding_mouse[1]:
+                            print('Current pos: ', holding_mouse[2])
+                            self.chess_board.board[y][x] = holding_mouse[2]
+                            # self.chess_board.board[holding_mouse[0][0]][holding_mouse[0][1]] = ''
+                            holding_mouse = (None, False, None)
 
             if (holding_mouse[1]):
                 screen_mouse_x, screen_mouse_y = pg.mouse.get_pos()
-                self.screen.blit(self.chess_piece_images[self.chess_board.board[holding_mouse[0][0]][holding_mouse[0][1]]],(screen_mouse_x - CELL_SIZE//2, screen_mouse_y - CELL_SIZE//2))
+                self.screen.blit(self.chess_piece_images[holding_mouse[2]],(screen_mouse_x - CELL_SIZE//2, screen_mouse_y - CELL_SIZE//2))
 
                 # for event in pg.event.get():
 
